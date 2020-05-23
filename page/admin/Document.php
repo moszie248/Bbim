@@ -1,4 +1,14 @@
-<?php include('../../Database/server.php') ?>
+<?php 
+$serverName = "localhost";
+$userName = "root";
+$userPassword = "";
+$dbName = "document";
+
+$conn = mysqli_connect($serverName,$userName,$userPassword,$dbName);
+$sql = "SELECT * FROM documenttype";
+$query = mysqli_query($conn,$sql);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +18,7 @@
   <link rel="stylesheet" href="../../Style/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="../../Style/Bootstrap/css/bootstrap.min.css" type="text/css">
   <link rel="stylesheet" href="../../Style/dist/css/adminlte.min.css">
-  <title>UPLOAD</title>
+  <title>ข้อมูลประเภทเอกสาร</title>
 </head>
 
 <body>
@@ -23,7 +33,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0 text-dark">ข้อมูลเอกสาร</h1>
+              <h1 class="m-0 text-dark">ข้อมูลประเภทเอกสาร</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
@@ -52,9 +62,7 @@
 
                     <div class="form-row justify-content-md-start">
                       <div class="col-2">
-                        <button type="submit" class="btn btn-primary" name="up_file" data-toggle="modal" data-target="#add-modal">เพิ่มข้อมูลเอกสาร</button>
-
-
+                        <a href="add_DocumentType.php" class="btn btn-primary" >เพิ่มข้อมูลประเภทเอกสาร</a>
                       </div>
                     </div>
 
@@ -64,20 +72,47 @@
                           <thead>
                             <tr>
                               <th scope="col">#</th>
-                              <th scope="col">รหัสเอกสาร</th>
+                              <th scope="col">ประเภทเอกสาร</th>
                               <th scope="col">การจัดการ</th>
                             </tr>
                           </thead>
+                          
+                          <?php
+                          while($result=mysqli_fetch_array($query,MYSQLI_ASSOC)){
+                          ?>
                           <tbody>
                             <tr>
-                              <th scope="row">1</th>
-                              <td>Mark</td>
                               <td>
-                                <a href="" data-toggle="modal" data-target="#edit-modal"><i class="fas fa-edit mr-3"></i></a>
-                                <a href=""><i class="fas fa-trash text-danger"></i></a>
+                                <div align="center" >
+                                    <?php echo $result["id"];?>
+                                  </div>
+                              </td>
+                              <td>
+                                <div >
+                                  <?php echo $result["name"];?>
+                                </div>
+
+                              </td>
+                              <td align="center">
+                                <!-- แก้ไข-->
+                                <a href="edit_DocumentType.php?id=<?php echo $result["id"];?>">
+                                    <i class="fas fa-edit mr-3"></i>
+                                  </a>
+                                <!-- ลบ -->
+                                <a href="JavaScript:if(confirm('ต้องการลบข้อมูลหรือไม่ ?')==true){window.location='delete_DocumentType.php?id=
+                                <?php echo $result["id"];?>';}">
+                                <button class="btn btn-xs" type="button" >
+                                      <i class="fas fa-trash text-danger"></i>
+                                </button>
+                                </a>
+
                               </td>
                             </tr>
                           </tbody>
+                          <?php
+                          }
+                          ?>
+
                         </table>
                       </div>
 
@@ -89,83 +124,11 @@
               <!-- /.card -->
             </section>
 
-
           </div>
           <!-- /.row (main row) -->
 
         </div><!-- /.container-fluid -->
       </section>
-
-      <!-- add modal-->
-      <form action="" method="post">
-        <div class="modal fade" id="add-modal">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title">เพิ่มข้อมูลเอกสาร</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body text-left">
-
-                <div class="form-row justify-content-md-center mt-2">
-                  <div class="col-3">
-                    รหัสเอกสาร(เลขที่รับ) <label class="text-danger">*</label>
-                  </div>
-                  <div class="col-6">
-                    <input type="text" class="form-control" placeholder="รหัสเอกสาร" aria-label="รหัสเอกสาร" required>
-                  </div>
-
-                </div>
-
-
-              </div>
-              <div class="modal-footer justify-content-center">
-                <button type="submit" class="btn btn-success">submit</button>
-                <button type="reset" class="btn btn-danger">cancel</button>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
-      </form>
-
-      <!-- add modal-->
-      <form action="" method="post">
-        <div class="modal fade" id="edit-modal">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4 class="modal-title">แก้ไขข้อมูลเอกสาร</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <div class="form-row justify-content-md-center mt-2">
-                  <div class="col-3">
-                    รหัสเอกสาร(เลขที่รับ) <label class="text-danger">*</label>
-                  </div>
-                  <div class="col-6">
-                    <input type="text" class="form-control" placeholder="รหัสเอกสาร" aria-label="รหัสเอกสาร" required>
-                  </div>
-
-                </div>
-              </div>
-              <div class="modal-footer justify-content-center">
-                <button type="submit" class="btn btn-success">submit</button>
-                <button type="reset" class="btn btn-danger">cancel</button>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
-      </form>
-
-
 
     </div>
 

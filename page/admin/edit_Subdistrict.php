@@ -5,8 +5,18 @@ $userPassword = "";
 $dbName = "document";
 
 $conn = mysqli_connect($serverName,$userName,$userPassword,$dbName);
-$sql = "SELECT * FROM district";
+
+$strID = null;
+if(isset($_GET["id"]))
+{
+   $strID = $_GET["id"];
+}
+
+$sql = "SELECT * FROM subdistrict WHERE id = '".$strID."' ";
 $query = mysqli_query($conn,$sql);
+$result=mysqli_fetch_array($query,MYSQLI_ASSOC);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -18,13 +28,14 @@ $query = mysqli_query($conn,$sql);
   <link rel="stylesheet" href="../../Style/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="../../Style/Bootstrap/css/bootstrap.min.css" type="text/css">
   <link rel="stylesheet" href="../../Style/dist/css/adminlte.min.css">
-  <title>ข้อมูลอำเภอ</title>
+  <title>แก้ไขข้อมูลตำบล</title>
 </head>
 
 <body>
   <div class="wrapper">
 
     <?php include('../header.php') ?>
+    
 
     <div class="content-wrapper">
 
@@ -33,7 +44,7 @@ $query = mysqli_query($conn,$sql);
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0 text-dark">ข้อมูลอำเภอ</h1>
+              <h1 class="m-0 text-dark">แก้ไขข้อมูลตำบล</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
@@ -59,66 +70,35 @@ $query = mysqli_query($conn,$sql);
               <div class="card">
                 <div class="card-body">
                   <div class="tab-content p-0">
+                <form class="forms-sample" action="Save_edit_Subdistrict.php?id=<?php echo "$strID" ;?>" name="frmAdd" method="post">
 
-                    <div class="form-row justify-content-md-start">
-                      <div class="col-2">
-                        <a href="add_District.php" class="btn btn-primary">เพิ่มข้อมูลอำเภอ</a>
+                <div class="form-group">
+                    <label for="exampleInputEmail3">จังหวัด</label>
+                    <input class="form-control" type="text" name="name"
+                        value="<?php echo $result["province_id"];?>"></td>
+                </div>
 
-                      </div>
-                    </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail3">อำเภอ</label>
+                    <input class="form-control" type="text" name="name"
+                        value="<?php echo $result["district_id"];?>"></td>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail3">ตำบล</label>
+                    <input class="form-control" type="text" name="name"
+                        value="<?php echo $result["name"];?>"></td>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail3">รหัสไปรษณีย์</label>
+                    <input class="form-control" type="text" name="postcode"
+                        value="<?php echo $result["postcode"];?>"></td>
+                </div>
+                <button type="submit" class="btn btn-success">บันทึก</button>
+                <a href="Province.php" class="btn btn-danger">ยกเลิก</a>
 
-                    <div class="form-row justify-content-md-center mt-5">
-                      <div class="col-10">
-                        <table class="table table-bordered text-center">
-                          <thead>
-                            <tr>
-                              <th scope="col">#</th>
-                              <th scope="col">อำเภอ</th>
-                              <th scope="col">การจัดการ</th>
-                            </tr>
-                          </thead>
-                          
-                          <?php
-                          while($result=mysqli_fetch_array($query,MYSQLI_ASSOC)){
-                          ?>
-                          <tbody>
-                            <tr>
-                              <td>
-                                <div align="center" >
-                                    <?php echo $result["id"];?>
-                                  </div>
-                              </td>
-                              <td>
-                                <div >
-                                  <?php echo $result["name"];?>
-                                </div>
-
-                              </td>
-                              <td align="center">
-                                <!-- แก้ไข-->
-                                <a href="edit_District.php?id=<?php echo $result["id"];?>">
-                                    <i class="fas fa-edit mr-3"></i>
-                                  </a>
-                                <!-- ลบ -->
-                                <a href="JavaScript:if(confirm('ต้องการลบข้อมูลหรือไม่ ?')==true){window.location='delete_District.php?id=
-                                <?php echo $result["id"];?>';}">
-                                <button class="btn btn-xs" type="button" >
-                                      <i class="fas fa-trash text-danger"></i>
-                                </button>
-                                </a>
-
-                              </td>
-                            </tr>
-                          </tbody>
-                          <?php
-                          }
-                          ?>
+                </form>
 
 
-                        </table>
-                      </div>
-
-                    </div>
 
                   </div>
                 </div>
