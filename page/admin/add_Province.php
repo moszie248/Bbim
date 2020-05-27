@@ -52,7 +52,7 @@
 
                 <div class="form-group">
                     <label for="exampleInputEmail3">จังหวัด</label>
-                    <input type="text" class="form-control" name ="name" 
+                    <input type="text" class="form-control" name ="province_name" 
                         placeholder="จังหวัด" aria-label="จังหวัด" required>
                 </div>
                 

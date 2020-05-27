@@ -67,7 +67,7 @@
                             $dbName = "document";
 
                             $conn = mysqli_connect($serverName,$userName,$userPassword,$dbName);
-                            $sql = "SELECT * FROM province ORDER BY id ASC" ;
+                            $sql = "SELECT * FROM province ORDER BY province_id ASC" ;
                             $query = mysqli_query($conn,$sql);
                             
                               ini_set('display_errors', 1);
@@ -76,7 +76,7 @@
                           while($rs = mysqli_fetch_array($query))
                           {
                           ?>
-                          <option value='<?php echo $rs['id'];?>'><?php echo $rs['name'];?> </option>
+                          <option value='<?php echo $rs['province_id'];?>'><?php echo $rs['province_name'];?> </option>
                           <?php } ?>
                         </select>
                 </div>
@@ -95,7 +95,7 @@
                             $dbName = "document";
 
                             $conn = mysqli_connect($serverName,$userName,$userPassword,$dbName);
-                            $sql = "SELECT * FROM district ORDER BY id ASC" ;
+                            $sql = "SELECT * FROM district ORDER BY district_id ASC" ;
                             $query = mysqli_query($conn,$sql);
                             
                               ini_set('display_errors', 1);
@@ -104,7 +104,7 @@
                           while($rs = mysqli_fetch_array($query))
                           {
                           ?>
-                          <option value='<?php echo $rs['id'];?>'><?php echo $rs['name'];?> </option>
+                          <option value='<?php echo $rs['district_id'];?>'><?php echo $rs['district_name'];?> </option>
                           <?php } ?>
                         </select>
                 </div>
@@ -120,7 +120,7 @@
                         placeholder="รหัสไปรษณีย์" aria-label="รหัสไปรษณีย์" required>
                 </div>
                 <button type="submit" class="btn btn-success">บันทึก</button>
-                <a href="Province.php" class="btn btn-danger">ยกเลิก</a>
+                <a href="Sub-District.php" class="btn btn-danger">ยกเลิก</a>
 
                 </form>
 

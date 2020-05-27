@@ -60,11 +60,10 @@ $query = mysqli_query($conn,$sql);
                 <div class="card-body">
                   <div class="tab-content p-0">
 
-                    <div class="form-row justify-content-md-start">
+                    <div class="form-row justify-content-md-end">
                       <div class="col-2">
-                        <button type="submit" class="btn btn-primary" name="up_file" data-toggle="modal" data-target="#add-modal">เพิ่มข้อมูลเอกสาร</button>
-
-
+                        <a href="add_Document.php" class="btn btn-primary">
+                        <i class='fas fa-plus-circle'></i> เพิ่มข้อมูล</a>
                       </div>
                     </div>
 
@@ -72,7 +71,7 @@ $query = mysqli_query($conn,$sql);
                       <div class="col-11">
                         <table class="table table-bordered text-center">
                           <thead>
-                            <tr>
+                            <tr style="background-color:#AED6F1">
                               <th scope="col">#</th>
                               <th scope="col">รหัสเอกสาร</th>
                               <th scope="col">ชื่อเอกสาร</th>

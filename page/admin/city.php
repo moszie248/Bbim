@@ -5,8 +5,15 @@ $userPassword = "";
 $dbName = "document";
 
 $conn = mysqli_connect($serverName,$userName,$userPassword,$dbName);
-$sql = "SELECT * FROM province";
+// $sql = "SELECT * FROM subdistrict";
+// $query = mysqli_query($conn,$sql);
+
+$sql = "SELECT s.subdistrict_id, s.subdistrict_name, s.postcode, d.district_name, p.province_name 
+FROM subdistrict s
+INNER JOIN district d ON d.district_id = s.district_id 
+INNER JOIN province p ON p.province_id = d.province_id ";
 $query = mysqli_query($conn,$sql);
+$result=mysqli_fetch_array($query,MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +25,7 @@ $query = mysqli_query($conn,$sql);
   <link rel="stylesheet" href="../../Style/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="../../Style/Bootstrap/css/bootstrap.min.css" type="text/css">
   <link rel="stylesheet" href="../../Style/dist/css/adminlte.min.css">
-  <title>ข้อมูลจังหวัด</title>
+  <title>ข้อมูลจังหวัดทั้งหมด</title>
 </head>
 
 <body>
@@ -33,7 +40,7 @@ $query = mysqli_query($conn,$sql);
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0 text-dark">ข้อมูลจังหวัด</h1>
+              <h1 class="m-0 text-dark">ข้อมูลจังหวัดทั้งหมด</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
@@ -63,11 +70,20 @@ $query = mysqli_query($conn,$sql);
                     <div class="form-row justify-content-md-end">
                       <div class="col-2">
                         <a href="add_Province.php" class="btn btn-primary">
-                        <i class='fas fa-plus-circle'></i> เพิ่มข้อมูล</a>
+                          <i class='fas fa-plus-circle'></i> เพิ่มข้อมูลจังหวัด</a>
+                        
                       </div>
                       <div class="col-2">
-                        <a href="city.php" class="btn btn-secondary">ย้อนกลับ</a>
+                        <a href="add_District.php" class="btn btn-primary">
+                          <i class='fas fa-plus-circle'></i> เพิ่มข้อมูลอำเภอ</a>
+                        
                       </div>
+                      <div class="col-2">
+                        <a href="add_Subdistrict.php" class="btn btn-primary">
+                          <i class='fas fa-plus-circle'></i> เพิ่มข้อมูลตำบล</a>
+                        
+                      </div>
+                      
                     </div>
 
                     <div class="form-row justify-content-md-center mt-5">
@@ -77,10 +93,13 @@ $query = mysqli_query($conn,$sql);
                             <tr style="background-color:#AED6F1">
                               <th scope="col">#</th>
                               <th scope="col">จังหวัด</th>
-                              <th scope="col">การจัดการ</th>
+                              <th scope="col">อำเภอ</th>
+                              <th scope="col">ตำบล</th>
+                              <th scope="col">รหัสไปรษณีย์</th>
+                              
                             </tr>
                           </thead>
-                          
+
                           <?php
                           while($result=mysqli_fetch_array($query,MYSQLI_ASSOC)){
                           ?>
@@ -88,34 +107,36 @@ $query = mysqli_query($conn,$sql);
                             <tr>
                               <td>
                                 <div align="center" >
-                                    <?php echo $result["province_id"];?>
+                                    <?php echo $result["subdistrict_id"];?>
                                   </div>
                               </td>
                               <td>
                                 <div >
+                                  
                                   <?php echo $result["province_name"];?>
                                 </div>
-
                               </td>
-                              <td align="center">
-                                <!-- แก้ไข-->
-                                <a href="edit_Province.php?province_id=<?php echo $result["province_id"];?>">
-                                    <i class="fas fa-edit text-warning mr-3"></i>
-                                  </a>
-                                <!-- ลบ -->
-                                <a href="JavaScript:if(confirm('คุณต้องการลบข้อมูลจังหวัดใช่หรือไม่ ?')==true){window.location='delete_Province.php?province_id=
-                                <?php echo $result["province_id"];?>';}">
-                                <button class="btn btn-xs" type="button" >
-                                      <i class="fas fa-trash text-danger"></i>
-                                </button>
-                                </a>
-
+                              <td>
+                                <div >
+                                  <?php echo $result["district_name"];?>
+                                </div>
                               </td>
+                              <td>
+                                <div >
+                                  <?php echo $result["subdistrict_name"];?>
+                                </div>
+                              </td>
+                              <td>
+                                <div >
+                                  <?php echo $result["postcode"];?>
+                                </div>
+                              </td>
+                              
                             </tr>
                           </tbody>
                           <?php
                           }
-                          ?>
+                          ?>                        
 
                         </table>
                       </div>
@@ -134,6 +155,7 @@ $query = mysqli_query($conn,$sql);
 
         </div><!-- /.container-fluid -->
       </section>
+
 
     </div>
 

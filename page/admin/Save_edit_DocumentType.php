@@ -15,20 +15,27 @@
   mysqli_set_charset($conn,"utf8");
 
   $strID = null;
-    if(isset($_GET["id"]))
+    if(isset($_GET["documenttype_id"]))
     {
-        $strID = $_GET["id"];
+        $strID = $_GET["documenttype_id"];
     }
 
 	$sql = "UPDATE documenttype SET
-			name = '".$_POST["name"]."'
-			WHERE id = '".$strID."' ";
+			documenttype_name = '".$_POST["name"]."'
+			WHERE documenttype_id = '".$strID."' ";
 
 	$query = mysqli_query($conn,$sql);
 
 	if($query) {
-        header("location:Document.php");
-	}
+        // header("location:Document.php");
+        echo "<script>alert('แก้ไขข้อมูลประเภทเอกสารสำเร็จ');location='\/DocumentStorage/page/admin/Document.php';</script>";
+  }
+  else{
+    echo "<script type='text/javascript'>";
+    echo "alert('ไม่สามารถแก้ไขข้อมูลประเภทเอกสารได้');";
+    echo "window.location = 'Document.php'; ";
+    echo "</script>";
+  }
 
 	mysqli_close($conn);
 ?>

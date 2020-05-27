@@ -7,16 +7,21 @@ $dbName = "document";
 $conn = mysqli_connect($serverName,$userName,$userPassword,$dbName);
 
 $strID = null;
-if(isset($_GET["id"]))
+if(isset($_GET["subdistrict_id"]))
 {
-   $strID = $_GET["id"];
+   $strID = $_GET["subdistrict_id"];
 }
 
-$sql = "SELECT * FROM subdistrict WHERE id = '".$strID."' ";
+// $sql = "SELECT * FROM subdistrict WHERE id = '".$strID."' ";
+
+
+$sql = "SELECT s.subdistrict_id, s.subdistrict_name, s.postcode, d.district_name, p.province_name 
+FROM subdistrict s
+INNER JOIN district d ON d.district_id = s.district_id 
+INNER JOIN province p ON p.province_id = d.province_id WHERE subdistrict_id = '".$strID."' ";
+
 $query = mysqli_query($conn,$sql);
 $result=mysqli_fetch_array($query,MYSQLI_ASSOC);
-
-
 ?>
 
 <!DOCTYPE html>
@@ -70,23 +75,23 @@ $result=mysqli_fetch_array($query,MYSQLI_ASSOC);
               <div class="card">
                 <div class="card-body">
                   <div class="tab-content p-0">
-                <form class="forms-sample" action="Save_edit_Subdistrict.php?id=<?php echo "$strID" ;?>" name="frmAdd" method="post">
+                <form class="forms-sample" action="Save_edit_Subdistrict.php?subdistrict_id=<?php echo "$strID" ;?>" name="frmAdd" method="post">
 
                 <div class="form-group">
                     <label for="exampleInputEmail3">จังหวัด</label>
                     <input class="form-control" type="text" name="name"
-                        value="<?php echo $result["province_id"];?>"></td>
+                        value="<?php echo $result["province_name"];?>" disabled></td>
                 </div>
 
                 <div class="form-group">
                     <label for="exampleInputEmail3">อำเภอ</label>
                     <input class="form-control" type="text" name="name"
-                        value="<?php echo $result["district_id"];?>"></td>
+                        value="<?php echo $result["district_name"];?> " disabled></td>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail3">ตำบล</label>
                     <input class="form-control" type="text" name="name"
-                        value="<?php echo $result["name"];?>"></td>
+                        value="<?php echo $result["subdistrict_name"];?>"></td>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail3">รหัสไปรษณีย์</label>

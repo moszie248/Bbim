@@ -7,12 +7,12 @@ $dbName = "document";
 $conn = mysqli_connect($serverName,$userName,$userPassword,$dbName);
 
 $strID = null;
-if(isset($_GET["id"]))
+if(isset($_GET["titlename_id"]))
 {
-   $strID = $_GET["id"];
+   $strID = $_GET["titlename_id"];
 }
 
-$sql = "SELECT * FROM titlename WHERE id = '".$strID."' ";
+$sql = "SELECT * FROM titlename WHERE titlename_id = '".$strID."' ";
 $query = mysqli_query($conn,$sql);
 $result=mysqli_fetch_array($query,MYSQLI_ASSOC);
 
@@ -71,12 +71,12 @@ $result=mysqli_fetch_array($query,MYSQLI_ASSOC);
               <div class="card">
                 <div class="card-body">
                   <div class="tab-content p-0">
-                <form class="forms-sample" action="Save_edit_titlename.php?id=<?php echo "$strID" ;?>" name="frmAdd" method="post">
+                <form class="forms-sample" action="Save_edit_titlename.php?titlename_id=<?php echo "$strID" ;?>" name="frmAdd" method="post">
 
                 <div class="form-group">
                     <label for="exampleInputEmail3">คำนำหน้าชื่อ</label>
                     <input class="form-control" type="text" name="name"
-                        value="<?php echo $result["name"];?>"></td>
+                        value="<?php echo $result["titlename_name"];?>"></td>
                 </div>
                 <button type="submit" class="btn btn-success">บันทึก</button>
                 <a href="TitleName.php" class="btn btn-danger">ยกเลิก</a>

@@ -60,9 +60,10 @@ $query = mysqli_query($conn,$sql);
                 <div class="card-body">
                   <div class="tab-content p-0">
 
-                    <div class="form-row justify-content-md-start">
+                    <div class="form-row justify-content-md-end">
                       <div class="col-2">
-                        <a href="add_DocumentType.php" class="btn btn-primary" >เพิ่มข้อมูลประเภทเอกสาร</a>
+                        <a href="add_DocumentType.php" class="btn btn-primary">
+                        <i class='fas fa-plus-circle'></i> เพิ่มข้อมูล</a>
                       </div>
                     </div>
 
@@ -70,7 +71,7 @@ $query = mysqli_query($conn,$sql);
                       <div class="col-11">
                         <table class="table table-bordered text-center">
                           <thead>
-                            <tr>
+                            <tr style="background-color:#AED6F1">
                               <th scope="col">#</th>
                               <th scope="col">ประเภทเอกสาร</th>
                               <th scope="col">การจัดการ</th>
@@ -84,23 +85,23 @@ $query = mysqli_query($conn,$sql);
                             <tr>
                               <td>
                                 <div align="center" >
-                                    <?php echo $result["id"];?>
+                                    <?php echo $result["documenttype_id"];?>
                                   </div>
                               </td>
                               <td>
                                 <div >
-                                  <?php echo $result["name"];?>
+                                  <?php echo $result["documenttype_name"];?>
                                 </div>
 
                               </td>
                               <td align="center">
                                 <!-- แก้ไข-->
-                                <a href="edit_DocumentType.php?id=<?php echo $result["id"];?>">
-                                    <i class="fas fa-edit mr-3"></i>
+                                <a href="edit_DocumentType.php?documenttype_id=<?php echo $result["documenttype_id"];?>">
+                                    <i class="fas fa-edit text-warning mr-3"></i>
                                   </a>
                                 <!-- ลบ -->
-                                <a href="JavaScript:if(confirm('ต้องการลบข้อมูลหรือไม่ ?')==true){window.location='delete_DocumentType.php?id=
-                                <?php echo $result["id"];?>';}">
+                                <a href="JavaScript:if(confirm('คุณต้องการลบข้อมูลประเภทเอกสารใช่หรือไม่ ?')==true){window.location='delete_DocumentType.php?documenttype_id=
+                                <?php echo $result["documenttype_id"];?>';}">
                                 <button class="btn btn-xs" type="button" >
                                       <i class="fas fa-trash text-danger"></i>
                                 </button>

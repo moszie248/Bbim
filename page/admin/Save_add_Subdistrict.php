@@ -20,20 +20,20 @@ $postcode = $_POST['postcode'];
 $id_district = $_POST["txtid_district"];
 
 
-$strSQL = "SELECT * FROM subdistrict WHERE name = '$name' ";
+$strSQL = "SELECT * FROM subdistrict WHERE subdistrict_name = '$name' ";
 $objQuery = mysqli_query($conn,$strSQL );
 $objResult = mysqli_fetch_array($objQuery);
 if($objResult){
 	echo "<script>";
-	echo "alert('ข้อมูลซ้ำ กรุณาลองใหม่อีกครั้ง !');";
+	echo "alert('! ไม่สามารถเพิ่มข้อมูลตำบลซ้ำกันได้ !');";
 	echo "window.location='\/DocumentStorage/page/admin/add_Subdistrict.php';";
 	echo "</script>";
 }else
 {
-	$strSQL = "INSERT INTO subdistrict (name,postcode,district_id) VALUES ('$name',$postcode,$id_district)";
+	$strSQL = "INSERT INTO subdistrict (subdistrict_name,postcode,district_id) VALUES ('$name',$postcode,$id_district)";
     $objQuery = mysqli_query($conn,$strSQL);
     //header("location:\/localhost/DocumentStorage/page/admin/District.php");
-	echo "<script>alert('บันทึกเรียบร้อย');location='\/DocumentStorage/page/admin/Sub-District.php';</script>";
+	echo "<script>alert('เพิ่มข้อมูลตำบลสำเร็จ');location='\/DocumentStorage/page/admin/Sub-District.php';</script>";
 
 
 

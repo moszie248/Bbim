@@ -87,6 +87,32 @@
             </li>
 
             <li class="nav-item">
+              <a href="city.php" class="nav-link">
+              <i class="nav-icon fas fa-th"></i></i>
+                <p>
+                ข้อมูลจังหวัดทั้งหมด
+                </p>
+              </a>
+            </li>
+
+            <!-- <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="city.php" id="navbardrop" data-toggle="dropdown">
+              <i class="nav-icon fas fa-th"></i>
+              ข้อมูลจังหวัดทั้งหมด
+              </a>
+              <div class="dropdown-menu" style="background-color:#AED6F1">
+                <a class="dropdown-item" href="Province.php">
+                  <i class="nav-icon fas fa-th"></i>ข้อมูลจังหวัด</a>
+
+                <a class="dropdown-item" href="District.php">
+                  <i class="nav-icon fas fa-th"></i>ข้อมูลอำเภอ</a>
+                  
+                <a class="dropdown-item" href="Sub-District.php">
+                  <i class="nav-icon fas fa-th"></i>ข้อมูลตำบล</a>
+              </div>
+            </li> -->
+
+            <!-- <li class="nav-item">
               <a href="Province.php" class="nav-link">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
@@ -111,7 +137,7 @@
                   ข้อมูลตำบล
                 </p>
               </a>
-            </li>
+            </li> -->
 
             <li class="nav-item">
               <a href="Document.php" class="nav-link">

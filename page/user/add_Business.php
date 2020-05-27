@@ -1,3 +1,14 @@
+<?php 
+$serverName = "localhost";
+$userName = "root";
+$userPassword = "";
+$dbName = "document";
+
+$conn = mysqli_connect($serverName,$userName,$userPassword,$dbName);
+$sql = "SELECT * FROM province";
+$query = mysqli_query($conn,$sql);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -48,17 +59,17 @@
               <div class="card">
                 <div class="card-body">
                   <div class="tab-content p-0">
-                <form class="forms-sample" action="Save_add_Province.php" name="frmAdd" method="post">
+                <form class="forms-sample" action="Save_add_Business.php" name="frmAdd" method="post">
 
                 <div class="form-group">
                     <label for="exampleInputEmail3">ชื่อสถานประกอบการ</label>
-                    <input type="text" class="form-control" name ="name" 
+                    <input type="text" class="form-control" name ="business_name" 
                         placeholder="ชื่อสถานประกอบการ" aria-label="ชื่อสถานประกอบการ" required>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">  
                           <label>ชื่อเจ้าของสถานประกอบการ</label>
-                          <select id="txtid_unit" name="txtid_unit" class="form-control">
+                          <select id="titlename" name="titlename" class="form-control">
                           <option value='none'> --- เลือกคำนำหน้าชื่อ --- </option>
 
                           <?php
@@ -71,7 +82,7 @@
                             $dbName = "document";
 
                             $conn = mysqli_connect($serverName,$userName,$userPassword,$dbName);
-                            $sql = "SELECT * FROM titlename ORDER BY id ASC" ;
+                            $sql = "SELECT * FROM titlename ORDER BY titlename_id ASC" ;
                             $query = mysqli_query($conn,$sql);
                             
                               ini_set('display_errors', 1);
@@ -80,7 +91,7 @@
                           while($rs = mysqli_fetch_array($query))
                           {
                           ?>
-                          <option value='<?php echo $rs['id'];?>'><?php echo $rs['name'];?> </option>
+                          <option value='<?php echo $rs['titlename_id'];?>'><?php echo $rs['titlename_name'];?> </option>
                           <?php } ?>
                           </select>
                         </div>
@@ -99,35 +110,57 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail3">ที่อยู่</label>
-                    <input type="text" class="form-control" name ="name" 
+                    <input type="text" class="form-control" name ="address" 
                         placeholder="ที่อยู่" aria-label="ที่อยู่" required>
                 </div>
+                
                 <div class="form-row">
                     <div class="form-group col-md-3">
-                        <label>จังหวัด</label>
-                        <select class="form-control" required>
-                        <option selected>--- เลือกจังหวัด ---</option>
-                        <option>...</option>
-                        </select>
+
+                        <label for="province">จังหวัด</label>
+                          <select name="id_province" id="province" class="form-control">
+                          <option value='none'> --- เลือกจังหวัด --- </option>
+
+                          <?php
+                            ini_set('display_errors', 1);
+                            error_reporting(~0); 
+                            
+                            $serverName = "localhost";
+                            $userName = "root";
+                            $userPassword = "";
+                            $dbName = "document";
+
+                            $conn = mysqli_connect($serverName,$userName,$userPassword,$dbName);
+                            $sql = "SELECT * FROM province ORDER BY province_id ASC" ;
+                            $query = mysqli_query($conn,$sql);
+                            
+                              ini_set('display_errors', 1);
+                              error_reporting(~0);
+
+                          while($rs = mysqli_fetch_array($query))
+                          {
+                          ?>
+                          <option value='<?php echo $rs['province_id'];?>'><?php echo $rs['province_name'];?> </option>
+                          <?php } ?>
+                          </select>
                     </div>
                     <div class="form-group col-md-3">
-                        <label>อำเภอ</label>
-                        <select class="form-control" required>
-                        <option selected>--- เลือกอำเภอ ---</option>
-                        <option>...</option>
-                        </select>
+                          <label for="district">อำเภอ</label>
+                          <select name="id_district" id="district" class="form-control">
+                          <option value='none'> --- เลือกอำเภอ --- </option>
+
+                          </select>
                     </div>
                     <div class="form-group col-md-3">
-                        <label>ตำบล</label>
-                        <select class="form-control" required>
-                        <option selected>--- เลือกตำบล ---</option>
-                        <option>...</option>
+                        <label for="subdistrict">ตำบล</label>
+                        <select name="id_subdistrict" id="subdistrict" class="form-control">
+                        <option selected> --- เลือกตำบล --- </option>
+                        
                         </select>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="exampleInputEmail3">รหัสไปรษณีย์</label>
-                        <input type="text" class="form-control" name ="name" 
-                            placeholder="รหัสไปรษณีย์" aria-label="รหัสไปรษณีย์" required>
+                        <input type="text" class="form-control" id="ZipCode" name ="zipcode" placeholder="รหัสไปรษณีย์"required disabled>
                     </div>
                 </div>
 
@@ -155,7 +188,83 @@
     </div>
 
   </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>                            
+  <script src="jquery-3.5.1.min.js"></script>
+  <script>
+ $(function(){
+    var provinceObject = $('#province');
+    var districtObject = $('#district');
+    var subdistrictObject = $('#subdistrict');
+ 
+    // on change province
+    provinceObject.on('change', function(){
+        var provinceId = $(this).val();
+        // console.log(provinceId);
+ 
+        districtObject.html('<option value=""> --- เลือกอำเภอ --- </option>');
+        // subdistrictObject.html('<option value=""> --- เลือกตำบล --- </option>');
+ 
+        $.get('get_district.php?province_id=' + provinceId, function(data){
+            var result = JSON.parse(data);
+            // console.log(result);
+            $.each(result, function(index, item){
+                districtObject.append(
+                    $('<option></option>').val(item.district_id).html(item.district_name)
+                );
+            });
+        });
+    });
+ 
+    // on change amphure
+    districtObject.on('change', function(){
+        var districtId = $(this).val();
+        
+ 
+        subdistrictObject.html('<option value=""> --- เลือกตำบล --- </option>');
+        
+        $.get('get_subdistrict.php?district_id=' + districtId, function(data){
+            var subresult = JSON.parse(data);
+            // console.log(result);
+            $.each(subresult, function(index, item){
+                subdistrictObject.append(
+                    $('<option></option>').val(item.subdistrict_id).html(item.subdistrict_name)
+                );
+            });
+            subdistrictObject.on('change', function(){
+              var select = $(this).val();
 
+              console.log(select + "this is select id");
+              for(var i=0 ; i < subresult.length; i++){
+                 console.log(subresult[i]);
+                if(select == subresult[i].subdistrict_id){
+                  $('#ZipCode').val(subresult[i].postcode);
+                }else{
+                  $('#ZipCode').val();
+                }
+                
+              }  
+            });
+
+
+
+
+        });
+
+        // subdistrictObject.on('change', function(){
+        //   var select = $(this).val();
+        //   console.log(select);
+          // <?php 
+          // $sql = "SELECT postcode FROM subdistrict WHERE subdistrict_id = {$_GET['district_id']}";
+          // ?>
+        //   $('#ZipCode').val("hello");
+        // });
+    });
+});    
+
+
+  </script>
+  <!-- <script src="assets/script.js"></script> -->
+          
   <!-- jQuery -->
   <script src="../../Style/jquery/jquery.min.js"></script>
   <!-- jQuery UI 1.11.4 -->
@@ -171,6 +280,9 @@
   <!-- <script src="../../Style/dist/js/demo.js"></script> -->
   <script src="../../Style/Bootstrap/js/bootstrap.min.js"></script>
 
+
 </body>
 
 </html>
+<?php
+mysqli_close($conn);

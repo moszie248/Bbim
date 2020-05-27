@@ -60,10 +60,14 @@ $query = mysqli_query($conn,$sql);
                 <div class="card-body">
                   <div class="tab-content p-0">
 
-                    <div class="form-row justify-content-md-start">
+                    <div class="form-row justify-content-md-end">
                       <div class="col-2">
-                        <a href="add_District.php" class="btn btn-primary">เพิ่มข้อมูลอำเภอ</a>
+                        <a href="add_District.php" class="btn btn-primary">
+                        <i class='fas fa-plus-circle'></i> เพิ่มข้อมูล</a>
 
+                      </div>
+                      <div class="col-2">
+                        <a href="city.php" class="btn btn-secondary">ย้อนกลับ</a>
                       </div>
                     </div>
 
@@ -71,7 +75,7 @@ $query = mysqli_query($conn,$sql);
                       <div class="col-10">
                         <table class="table table-bordered text-center">
                           <thead>
-                            <tr>
+                            <tr style="background-color:#AED6F1">
                               <th scope="col">#</th>
                               <th scope="col">อำเภอ</th>
                               <th scope="col">การจัดการ</th>
@@ -85,23 +89,23 @@ $query = mysqli_query($conn,$sql);
                             <tr>
                               <td>
                                 <div align="center" >
-                                    <?php echo $result["id"];?>
+                                    <?php echo $result["district_id"];?>
                                   </div>
                               </td>
                               <td>
                                 <div >
-                                  <?php echo $result["name"];?>
+                                  <?php echo $result["district_name"];?>
                                 </div>
 
                               </td>
                               <td align="center">
                                 <!-- แก้ไข-->
-                                <a href="edit_District.php?id=<?php echo $result["id"];?>">
-                                    <i class="fas fa-edit mr-3"></i>
+                                <a href="edit_District.php?district_id=<?php echo $result["district_id"];?>">
+                                    <i class="fas fa-edit text-warning mr-3"></i>
                                   </a>
                                 <!-- ลบ -->
-                                <a href="JavaScript:if(confirm('ต้องการลบข้อมูลหรือไม่ ?')==true){window.location='delete_District.php?id=
-                                <?php echo $result["id"];?>';}">
+                                <a href="JavaScript:if(confirm('คุณต้องการลบข้อมูลอำเภอใช่หรือไม่ ?')==true){window.location='delete_District.php?district_id=
+                                <?php echo $result["district_id"];?>';}">
                                 <button class="btn btn-xs" type="button" >
                                       <i class="fas fa-trash text-danger"></i>
                                 </button>

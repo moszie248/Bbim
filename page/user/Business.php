@@ -5,7 +5,15 @@ $userPassword = "";
 $dbName = "document";
 
 $conn = mysqli_connect($serverName,$userName,$userPassword,$dbName);
-$sql = "SELECT * FROM business";
+// $sql = "SELECT * FROM business";
+
+$sql = "SELECT b.business_id, b.business_name,b.first_name,b.last_name,b.phone,b.address,t.titlename_name,s.subdistrict_name,s.postcode, d.district_name, p.province_name 
+FROM business b
+INNER JOIN titlename t ON t.titlename_id = b.titlename_id
+INNER JOIN subdistrict s ON s.subdistrict_id = b.subdistrict_id
+INNER JOIN district d ON d.district_id = b.district_id 
+INNER JOIN province p ON p.province_id = b.province_id ";
+
 $query = mysqli_query($conn,$sql);
 ?>
 
@@ -60,10 +68,10 @@ $query = mysqli_query($conn,$sql);
                 <div class="card-body">
                   <div class="tab-content p-0">
 
-                    <div class="form-row justify-content-md-start">
+                    <div class="form-row justify-content-md-end">
                       <div class="col-2">
-                        <a href="add_Business.php" class="btn btn-primary">เพิ่มข้อมูลสถานประกอบการ</a>
-                        
+                        <a href="add_Business.php" class="btn btn-primary">
+                        <i class='fas fa-plus-circle'></i> เพิ่มข้อมูล</a>
                       </div>
                     </div>
 
@@ -71,7 +79,7 @@ $query = mysqli_query($conn,$sql);
                       <div class="col-11">
                         <table class="table table-bordered text-center">
                           <thead>
-                            <tr>
+                            <tr style="background-color:#AED6F1">
                               <th scope="col">#</th>
                               <th scope="col">ชื่อสถานประกอบการ</th>
                               <th scope="col">ชื่อเจ้าของสถานประกอบการ</th>
@@ -81,7 +89,64 @@ $query = mysqli_query($conn,$sql);
                             </tr>
                           </thead>
                           
-                          
+                          <?php
+                          while($result=mysqli_fetch_array($query,MYSQLI_ASSOC)){
+                          ?>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <div align="center" >
+                                    <?php echo $result["business_id"];?>
+                                  </div>
+                              </td>
+                              <td>
+                                <div >
+                                  <?php echo $result["business_name"];?>
+                                </div>
+                              </td>
+                              <td>
+                              <div >
+                                  <span><?php echo $result["titlename_name"];?></span>
+                                  <span><?php echo $result["first_name"];?></span>
+                                  <span><?php echo $result["last_name"];?></span>
+                                 
+                                </div>
+                              </td>
+                              <td>
+                                <div >
+                                  <?php echo $result["phone"];?>
+                                </div>
+                              </td>
+                              <td>
+                                <div >
+                                  <span><?php echo $result["address"];?></span>
+                                  <span> ต. <?php echo $result["subdistrict_name"];?></span>
+                                  <span> อ. <?php echo $result["district_name"];?></span>
+                                  <span> จ. <?php echo $result["province_name"];?></span>
+                                  <span><?php echo $result["postcode"];?></span>
+                                  
+                                </div>
+                            </td>
+
+                              <td align="center">
+                                <!-- แก้ไข-->
+                                <a href="edit_Business.php?business_id=<?php echo $result["business_id"];?>">
+                                    <i class="fas fa-edit text-warning mr-3"></i>
+                                  </a>
+                                <!-- ลบ -->
+                                <a href="JavaScript:if(confirm('คุณต้องการลบข้อมูลสถานประกอบการใช่หรือไม่ ?')==true){window.location='delete_Business.php?business_id=
+                                <?php echo $result["business_id"];?>';}">
+                                <button class="btn btn-xs" type="button" >
+                                      <i class="fas fa-trash text-danger"></i>
+                                </button>
+                                </a>
+
+                              </td>
+                            </tr>
+                          </tbody>
+                          <?php
+                          }
+                          ?>
 
                         </table>
                       </div>

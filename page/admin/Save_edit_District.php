@@ -15,19 +15,26 @@
   mysqli_set_charset($conn,"utf8");
 
   $strID = null;
-    if(isset($_GET["id"]))
+    if(isset($_GET["district_id"]))
     {
-        $strID = $_GET["id"];
+        $strID = $_GET["district_id"];
     }
 
 	$sql = "UPDATE district SET
-			name = '".$_POST["name"]."'
-			WHERE id = '".$strID."' ";
+			district_name = '".$_POST["name"]."'
+			WHERE district_id = '".$strID."' ";
 
 	$query = mysqli_query($conn,$sql);
 
 	if($query) {
-        header("location:District.php");
+        // header("location:District.php");
+        echo "<script>alert('แก้ไขข้อมูลอำเภอสำเร็จ');location='\/DocumentStorage/page/admin/District.php';</script>";
+  }
+  else{
+					echo "<script type='text/javascript'>";
+					echo "alert('ไม่สามารถแก้ไขข้อมูลอำเภอได้');";
+					echo "window.location = 'District.php'; ";
+					echo "</script>";
 	}
 
 	mysqli_close($conn);

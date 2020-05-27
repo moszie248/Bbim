@@ -5,7 +5,12 @@ $userPassword = "";
 $dbName = "document";
 
 $conn = mysqli_connect($serverName,$userName,$userPassword,$dbName);
-$sql = "SELECT * FROM user";
+// $sql = "SELECT * FROM user";
+
+$sql = "SELECT user.user_id, user.username, user.first_name, user.last_name, user.phone, user.permission, titlename.titlename_name
+as titlename_name FROM user user
+INNER JOIN titlename titlename ON titlename.titlename_id = user.titlename_id ";
+
 $query = mysqli_query($conn,$sql);
 ?>
 
@@ -60,9 +65,10 @@ $query = mysqli_query($conn,$sql);
                 <div class="card-body">
                   <div class="tab-content p-0">
 
-                    <div class="form-row justify-content-md-start">
+                    <div class="form-row justify-content-md-end">
                       <div class="col-2">
-                        <a href="add_Member.php" class="btn btn-primary">เพิ่มข้อมูลเจ้าหน้าที่</a>
+                        <a href="add_Member.php" class="btn btn-primary">
+                        <i class='fas fa-plus-circle'></i> เพิ่มข้อมูล</a>
                       </div>
                     </div>
 
@@ -70,7 +76,7 @@ $query = mysqli_query($conn,$sql);
                       <div class="col-10">
                         <table class="table table-bordered text-center">
                           <thead>
-                            <tr>
+                            <tr style="background-color:#AED6F1">
                               <th scope="col">#</th>
                               <th scope="col">ชื่อผู้ใช้งาน</th>
                               <th scope="col">ชื่อ-นามสกุล</th>
@@ -87,7 +93,7 @@ $query = mysqli_query($conn,$sql);
                             <tr>
                               <td>
                                 <div align="center" >
-                                    <?php echo $result["id"];?>
+                                    <?php echo $result["user_id"];?>
                                   </div>
                               </td>
                               <td>
@@ -97,7 +103,10 @@ $query = mysqli_query($conn,$sql);
                               </td>
                               <td>
                                 <div >
-                                  <?php echo $result["first_name"+"last_name"];?>
+                                  <span><?php echo $result["titlename_name"];?></span>
+                                  <span><?php echo $result["first_name"];?></span>
+                                  <span><?php echo $result["last_name"];?></span>
+                                 
                                 </div>
                               </td>
                               <td>
@@ -105,17 +114,33 @@ $query = mysqli_query($conn,$sql);
                                   <?php echo $result["phone"];?>
                                 </div>
                               </td>
+                              <td>
+                                <div >
+                                <?php
+                                  if($result["permission"] == 0){
+                                    echo "เจ้าหน้าที่";
+                                  }
+                                  else if($result["permission"] == 1){
+                                    echo "ผู้ดูแลระบบ";
+                                  }else{
+                                    echo "ไม่มีในระบบ";
+                                  }
+                                ?>
+                                  
+                                </div>
+                              </td>
+                              
 
                               <td align="center">
 
                                 <!-- แก้ไข-->
-                                <a href="edit_DocumentType.php?id=<?php echo $result["id"];?>">
-                                    <i class="fas fa-edit mr-3"></i>
+                                <a href="edit_member.php?user_id=<?php echo $result["user_id"];?>">
+                                    <i class="fas fa-edit text-warning mr-3"></i>
                                   </a>
 
                                 <!-- ลบ -->
-                                <a href="JavaScript:if(confirm('ต้องการลบข้อมูลหรือไม่ ?')==true){window.location='delete_Member.php?id=
-                                <?php echo $result["id"];?>';}">
+                                <a href="JavaScript:if(confirm('คุณต้องการลบข้อมูลเจ้าหน้าที่ใช่หรือไม่ ?')==true){window.location='delete_Member.php?user_id=
+                                <?php echo $result["user_id"];?>';}">
                                 <button class="btn btn-xs" type="button" >
                                       <i class="fas fa-trash text-danger"></i>
                                 </button>

@@ -7,12 +7,16 @@ $dbName = "document";
 $conn = mysqli_connect($serverName,$userName,$userPassword,$dbName);
 
 $strID = null;
-if(isset($_GET["id"]))
+if(isset($_GET["district_id"]))
 {
-   $strID = $_GET["id"];
+   $strID = $_GET["district_id"];
 }
 
-$sql = "SELECT * FROM district WHERE id = '".$strID."' ";
+// $sql = "SELECT * FROM district WHERE id = '".$strID."' ";
+
+$sql = "SELECT d.district_id, d.district_name, p.province_name as province_name FROM district d
+INNER JOIN province p ON p.province_id = d.province_id  WHERE d.district_id = '".$strID."'";
+
 $query = mysqli_query($conn,$sql);
 $result=mysqli_fetch_array($query,MYSQLI_ASSOC);
 
@@ -70,18 +74,18 @@ $result=mysqli_fetch_array($query,MYSQLI_ASSOC);
               <div class="card">
                 <div class="card-body">
                   <div class="tab-content p-0">
-                <form class="forms-sample" action="Save_edit_District.php?id=<?php echo "$strID" ;?>" name="frmAdd" method="post">
+                <form class="forms-sample" action="Save_edit_District.php?district_id=<?php echo "$strID" ;?>" name="frmAdd" method="post">
 
                 <div class="form-group">
                     <label for="exampleInputEmail3">จังหวัด</label>
-                    <input class="form-control" type="text" name="name"
-                        value="<?php echo $result["province_id"];?>"></td>
+                    <input class="form-control" type="text" name="name" 
+                        value="<?php echo $result["province_name"];?>" disabled></td>
                 </div>
 
                 <div class="form-group">
                     <label for="exampleInputEmail3">อำเภอ</label>
                     <input class="form-control" type="text" name="name"
-                        value="<?php echo $result["name"];?>"></td>
+                        value="<?php echo $result["district_name"];?>"></td>
                 </div>
                 <button type="submit" class="btn btn-success">บันทึก</button>
                 <a href="Province.php" class="btn btn-danger">ยกเลิก</a>

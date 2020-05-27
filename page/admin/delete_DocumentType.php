@@ -14,20 +14,21 @@
   mysqli_select_db ( $conn,$dbname  )or die ( "ไม่สามารถเลือกฐานข้อมูลได้" );
   mysqli_set_charset($conn,"utf8");
 
-			$strID = $_GET['id'];
-			$cek = mysqli_query($conn, "SELECT * FROM documenttype WHERE id = '$strID'");
+			$strID = $_GET['documenttype_id'];
+			$cek = mysqli_query($conn, "SELECT * FROM documenttype WHERE documenttype_id = '$strID'");
 			if(mysqli_num_rows($cek) == 0){
 			echo "<script type='text/javascript'>";
 			echo "alert('ไม่พบข้อมูล');";
 			echo "window.location = 'Document.php'; ";
 			echo "</script>";
 			}else{
-			$delete = mysqli_query($conn, "DELETE FROM documenttype WHERE id ='$strID'");
+			$delete = mysqli_query($conn, "DELETE FROM documenttype WHERE documenttype_id ='$strID'");
 			if($delete){
-                    header("location:Document.php");
+					// header("location:Document.php");
+					echo "<script>alert('ลบข้อมูลประเภทเอกสารสำเร็จ');location='\/DocumentStorage/page/admin/Document.php';</script>";
 			}else{
 					echo "<script type='text/javascript'>";
-					echo "alert('ไม่สามารถลบข้อมูลได้');";
+					echo "alert('ไม่สามารถลบข้อมูลประเภทเอกสารได้');";
 					echo "window.location = 'Document.php'; ";
 					echo "</script>";
 			}

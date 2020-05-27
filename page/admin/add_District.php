@@ -67,7 +67,7 @@
                             $dbName = "document";
 
                             $conn = mysqli_connect($serverName,$userName,$userPassword,$dbName);
-                            $sql = "SELECT * FROM province ORDER BY id ASC" ;
+                            $sql = "SELECT * FROM province ORDER BY province_id ASC" ;
                             $query = mysqli_query($conn,$sql);
                             
                               ini_set('display_errors', 1);
@@ -76,13 +76,13 @@
                           while($rs = mysqli_fetch_array($query))
                           {
                           ?>
-                          <option value='<?php echo $rs['id'];?>'><?php echo $rs['name'];?> </option>
+                          <option value='<?php echo $rs['province_id'];?>'><?php echo $rs['province_name'];?> </option>
                           <?php } ?>
                         </select>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail3">อำเภอ</label>
-                    <input type="text" class="form-control" name ="name" 
+                    <input type="text" class="form-control" name ="district_name" 
                         placeholder="อำเภอ" aria-label="อำเภอ" required>
                 </div>
                 <button type="submit" class="btn btn-success">บันทึก</button>

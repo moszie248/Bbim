@@ -14,7 +14,7 @@ if (!$conn) die ( "ไม่สามารถติดต่อกับ MySQL 
 mysqli_select_db ( $conn,$dbname  )or die ( "ไม่สามารถเลือกฐานข้อมูลได้" );
 mysqli_set_charset($conn,"utf8");
 
-$strSQL = "SELECT * FROM titlename WHERE name = '".trim($_POST['name'])."' ";
+$strSQL = "SELECT * FROM titlename WHERE titlename_name = '".trim($_POST['name'])."' ";
 $objQuery = mysqli_query($conn,$strSQL );
 $objResult = mysqli_fetch_array($objQuery);
 if($objResult){
@@ -24,9 +24,10 @@ if($objResult){
 	echo "</script>";
 }else
 {
-	$strSQL = "INSERT INTO titlename (	name) VALUES ('".$_POST["name"]."')";
+	$strSQL = "INSERT INTO titlename (titlename_name) VALUES ('".$_POST["name"]."')";
     $objQuery = mysqli_query($conn,$strSQL);
-	header("location:\/localhost/DocumentStorage/page/admin/TitleName.php");
+	// header("location:\/localhost/DocumentStorage/page/admin/TitleName.php");
+	echo "<script>alert('เพิ่มข้อมูลคำนำหน้าชื่อสำเร็จ');location='\/DocumentStorage/page/admin/TitleName.php';</script>";
 }
 
 	

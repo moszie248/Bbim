@@ -57,7 +57,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">  
                           <label>คำนำหน้าชื่อ</label>
-                          <select id="txtid_unit" name="txtid_unit" class="form-control">
+                          <select id="titlename" name="titlename" class="form-control">
                           <option value='none'> --- เลือกคำนำหน้าชื่อ --- </option>
 
                           <?php
@@ -70,7 +70,7 @@
                             $dbName = "document";
 
                             $conn = mysqli_connect($serverName,$userName,$userPassword,$dbName);
-                            $sql = "SELECT * FROM titlename ORDER BY id ASC" ;
+                            $sql = "SELECT * FROM titlename ORDER BY titlename_id ASC" ;
                             $query = mysqli_query($conn,$sql);
                             
                               ini_set('display_errors', 1);
@@ -79,7 +79,7 @@
                           while($rs = mysqli_fetch_array($query))
                           {
                           ?>
-                          <option value='<?php echo $rs['id'];?>'><?php echo $rs['name'];?> </option>
+                          <option value='<?php echo $rs['titlename_id'];?>'><?php echo $rs['titlename_name'];?> </option>
                           <?php } ?>
                           </select>
                         </div>
@@ -98,7 +98,7 @@
                         <input type="text" class="form-control" name="phone" placeholder="เบอร์โทรศัพท์" required>
                     </div>
                     <div class="form-group">
-                        <label>สิทธิืผู้ใช้งาน</label><label class="text-danger">*</label>
+                        <label>สิทธิ์ผู้ใช้งาน</label><label class="text-danger">*</label>
                     <div class="row"></div>
                     <!-- <div class="custom-control custom-radio">
                         <input type="radio" class="custom-control-input">

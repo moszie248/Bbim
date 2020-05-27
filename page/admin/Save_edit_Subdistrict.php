@@ -14,21 +14,28 @@
   mysqli_set_charset($conn,"utf8");
 
   $strID = null;
-    if(isset($_GET["id"]))
+    if(isset($_GET["subdistrict_id"]))
     {
-        $strID = $_GET["id"];
+        $strID = $_GET["subdistrict_id"];
     }
 
 	$sql = "UPDATE subdistrict SET
-			name = '".$_POST["name"]."', postcode = '".$_POST["postcode"]."'
-            WHERE id = '".$strID."' ";
+			subdistrict_name = '".$_POST["name"]."', postcode = '".$_POST["postcode"]."'
+      WHERE subdistrict_id = '".$strID."' ";
             
 
 	$query = mysqli_query($conn,$sql);
 
 	if($query) {
-        header("location:Sub-District.php");
-	}
+        // header("location:Sub-District.php");
+        echo "<script>alert('แก้ไขข้อมูลตำบลสำเร็จ');location='\/DocumentStorage/page/admin/Sub-District.php';</script>";
+  }
+  else{
+    echo "<script type='text/javascript'>";
+    echo "alert('ไม่สามารถแก้ไขข้อมูลตำบลได้');";
+    echo "window.location = 'Sub-District.php'; ";
+    echo "</script>";
+  }
 
 	mysqli_close($conn);
 ?>
